@@ -1,0 +1,19 @@
+influxdb:
+  image: qnib/influxdb
+  ports:
+   - "8083:8083"
+   - "8086:8086"
+  dns: 172.17.42.1
+  hostname: influxdb
+  volumes: 
+   - /opt/influxdb/shared
+  privileged: true
+
+consul:
+  image: qnib/consul
+  ports:
+   - "8500:8500"
+   - "53:8600"
+  dns: 172.17.42.1
+  hostname: consul
+  #privileged: true
