@@ -16,6 +16,7 @@ consul:
   ports:
    - "8500:8500"
    - "53:8600/udp"
+   - "2003:2003"
   dns: 172.17.42.1
   hostname: consul
   #privileged: true
