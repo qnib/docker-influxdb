@@ -1,0 +1,10 @@
+{
+  "service": {
+    "name": "influxdb",
+    "port": 8086,
+    "check": {
+      "script": "curl -s http://127.0.0.1:8086/ping|grep ok",
+      "interval": "10s"
+    }
+  }
+}

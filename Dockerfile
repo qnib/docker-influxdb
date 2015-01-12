@@ -9,6 +9,8 @@ ADD opt/influxdb/current/config.toml /opt/influxdb/current/config.toml
 ADD opt/qnib/bin/bootstrap_influxdb.sh /opt/qnib/bin/bootstrap_influxdb.sh
 ADD opt/influxdb/etc/default_db.json /opt/influxdb/etc/default_db.json
 ADD opt/influxdb/etc/graphite_db.json /opt/influxdb/etc/graphite_db.json
+ADD etc/consul.d/check_influxdb.json /etc/consul.d/check_influxdb.json
+ADD etc/consul.d/check_carbon.json /etc/consul.d/check_carbon.json
 
 # put the database into a volume (if not maped)
 VOLUME ["/opt/influxdb/shared"]
