@@ -4,8 +4,8 @@
 host=127.0.0.1
 port=8086
 
-graphite_config=/opt/influxdb/etc/graphite_db.json
-default_config=/opt/influxdb/etc/default_db.json
+metric_config=/opt/influxdb/etc/metric_db.json
+dash_config=/opt/influxdb/etc/dash_db.json
 
 preloaded_db=/opt/influxdb/shared/.db_loaded
 
@@ -74,8 +74,8 @@ function main() {
 		done
 		echo ''
 		change_root_password
-		create_database ${GRAPHITE_DATABASE} ${GRAPHITE_USERNAME} ${GRAPHITE_PASSWORD} ${graphite_config}
-		create_database ${DEFAULT_DATABASE} ${DEFAULT_USERNAME} ${DEFAULT_PASSWORD} ${default_config}
+		create_database ${METRIC_DATABASE} ${METRIC_USERNAME} ${METRIC_PASSWORD} ${metric_config}
+		create_database ${DASHBOARD_DATABASE} ${DASHBOARD_USERNAME} ${DASHBOARD_PASSWORD} ${dash_config}
 		touch "${preloaded_db}"
 	else
 		echo 'database already created.'

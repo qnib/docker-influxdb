@@ -7,8 +7,7 @@ ADD opt/qnib/bin/start_influxdb.sh /opt/qnib/bin/start_influxdb.sh
 ADD opt/influxdb/current/config.toml /opt/influxdb/current/config.toml
 
 ADD opt/qnib/bin/bootstrap_influxdb.sh /opt/qnib/bin/bootstrap_influxdb.sh
-ADD opt/influxdb/etc/default_db.json /opt/influxdb/etc/default_db.json
-ADD opt/influxdb/etc/graphite_db.json /opt/influxdb/etc/graphite_db.json
+ADD opt/influxdb/etc/ /opt/influxdb/etc/
 ADD etc/consul.d/check_influxdb.json /etc/consul.d/check_influxdb.json
 ADD etc/consul.d/check_carbon.json /etc/consul.d/check_carbon.json
 
@@ -22,9 +21,9 @@ EXPOSE 8083 8086 8090 8099
 EXPOSE 2003 2003/udp
 
 ENV ROOT_PASSWORD root
-ENV GRAPHITE_DATABASE graphite
-ENV GRAPHITE_USERNAME graphite
-ENV GRAPHITE_PASSWORD graphite
-ENV DEFAULT_DATABASE default
-ENV DEFAULT_USERNAME default
-ENV DEFAULT_PASSWORD default
+ENV METRIC_DATABASE carbon
+ENV METRIC_USERNAME carbon
+ENV METRIC_PASSWORD carbon
+ENV DASHBOARD_DATABASE default
+ENV DASHBOARD_USERNAME default
+ENV DASHBOARD_PASSWORD default
