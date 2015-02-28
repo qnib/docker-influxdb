@@ -1,7 +1,7 @@
 FROM qnib/terminal
 MAINTAINER "Christian Kniep <christian@qnib.org>"
 
-RUN rpm -ivh http://s3.amazonaws.com/influxdb/influxdb-latest-1.x86_64.rpm
+RUN rpm -ivh http://s3.amazonaws.com/influxdb/influxdb-0.9.0_rc6-1.x86_64.rpm
 ADD etc/supervisord.d/influxdb.ini /etc/supervisord.d/influxdb.ini
 ADD opt/qnib/bin/start_influxdb.sh /opt/qnib/bin/start_influxdb.sh
 ADD opt/influxdb/current/config.toml /opt/influxdb/current/config.toml
