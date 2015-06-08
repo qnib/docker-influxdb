@@ -1,4 +1,4 @@
-FROM qnib/terminal
+FROM qnib/terminal:light
 MAINTAINER "Christian Kniep <christian@qnib.org>"
 
 RUN rpm -ivh http://s3.amazonaws.com/influxdb/influxdb-latest-1.x86_64.rpm
