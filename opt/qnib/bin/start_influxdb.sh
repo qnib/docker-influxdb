@@ -11,12 +11,17 @@ if [ ${EC} -eq 1 ];then
     pipework --wait
 fi
 
-trap "kill -9 $(cat ${PIDFILE})" SIGINT SIGTERM
+function stop_influxdb {
+    kill -9 $(cat ${PIDFILE})
+    exit
+}
+trap "stop_influxdb" SIGINT SIGTERM
 
 
-/usr/bin/influxdb -pidfile ${PIDFILE} -config /opt/influxdb/current/config.toml &
+/opt/influxdb/influxd -pidfile ${PIDFILE} -config /opt/influxdb/current/config.toml &
 sleep 3
-/opt/qnib/bin/bootstrap_influxdb.sh
+curl -G http://localhost:8086/query --data-urlencode "q=CREATE DATABASE carbon"
+curl -G http://localhost:8086/query --data-urlencode "q=CREATE DATABASE influxdb"
 
 while [ -f ${PIDFILE} ];do
     sleep 1
