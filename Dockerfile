@@ -1,11 +1,10 @@
 FROM qnib/terminal
 
-RUN rpm -ivh http://s3.amazonaws.com/influxdb/influxdb-latest-1.x86_64.rpm
+RUN yum install -y http://influxdb.s3.amazonaws.com/influxdb-0.9.2-1.x86_64.rpm
 ADD etc/supervisord.d/influxdb.ini /etc/supervisord.d/influxdb.ini
 ADD opt/qnib/bin/start_influxdb.sh /opt/qnib/bin/start_influxdb.sh
 ADD opt/influxdb/current/config.toml /opt/influxdb/current/config.toml
 
-ADD opt/qnib/bin/bootstrap_influxdb.sh /opt/qnib/bin/bootstrap_influxdb.sh
 ADD opt/influxdb/etc/ /opt/influxdb/etc/
 ADD etc/consul.d/check_influxdb.json /etc/consul.d/check_influxdb.json
 ADD etc/consul.d/check_carbon.json /etc/consul.d/check_carbon.json

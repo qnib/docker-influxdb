@@ -1,0 +1,35 @@
+consul:
+    hostname: consul
+    image: qnib/consul
+    environment:
+    - DC_NAME=dc1
+    ports:
+    - "8500:8500"
+    dns: 127.0.0.1
+
+influxdb:
+    hostname: influxdb
+    dns: 127.0.0.1
+    image: qnib/influxdb
+    volumes: 
+    - /opt/influxdb/shared
+    environment:
+    - DC_NAME=dc1
+    links:
+    - consul:consul
+    ports:
+    - 8083:8083
+    - 8086:8086
+    privileged: true
+
+grafana2:
+  image: qnib/grafana2
+  ports:
+   - "3000:3000"
+  dns: 127.0.0.1
+  hostname: grafana
+  environment:
+  - DC_NAME=dc1
+  links:
+  - consul:consul
+  privileged: true

@@ -3,7 +3,7 @@
     "name": "influxdb",
     "port": 8086,
     "check": {
-      "script": "curl -s http://127.0.0.1:8086/ping|grep ok",
+      "script": "supervisorctl status influxdb|grep RUNNING",
       "interval": "10s"
     }
   }
