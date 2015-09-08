@@ -1,6 +1,6 @@
 FROM qnib/terminal
 
-RUN yum install -y http://influxdb.s3.amazonaws.com/influxdb-0.9.2-1.x86_64.rpm
+RUN yum install -y https://s3.amazonaws.com/influxdb/influxdb-0.9.3-1.x86_64.rpm
 ADD etc/supervisord.d/influxdb.ini /etc/supervisord.d/influxdb.ini
 ADD opt/qnib/bin/start_influxdb.sh /opt/qnib/bin/start_influxdb.sh
 ADD opt/influxdb/current/config.toml /opt/influxdb/current/config.toml
@@ -17,6 +17,7 @@ EXPOSE 8083 8086 8090 8099
 
 # Graphite
 EXPOSE 2003 2003/udp
+EXPOSE 4242
 
 ENV ROOT_PASSWORD root
 ENV METRIC_DATABASE carbon
