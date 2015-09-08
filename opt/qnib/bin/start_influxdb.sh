@@ -20,8 +20,8 @@ trap "stop_influxdb" SIGINT SIGTERM
 
 /opt/influxdb/influxd -pidfile ${PIDFILE} -config /opt/influxdb/current/config.toml &
 sleep 3
-curl -G http://localhost:8086/query --data-urlencode "q=CREATE DATABASE carbon"
-curl -G http://localhost:8086/query --data-urlencode "q=CREATE DATABASE influxdb"
+#curl -sG http://localhost:8086/query --data-urlencode "q=CREATE DATABASE carbon"
+#curl -sG http://localhost:8086/query --data-urlencode "q=CREATE DATABASE influxdb"
 
 while [ -f ${PIDFILE} ];do
     sleep 1
