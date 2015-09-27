@@ -2,6 +2,7 @@
   "service": {
     "name": "carbon",
     "port": 2003,
+    "tags": [ "storage", "influxdb" ],
     "check": {
       "script": "nmap 127.0.0.1 -PN -p 2003 | grep open",
       "interval": "10s"
