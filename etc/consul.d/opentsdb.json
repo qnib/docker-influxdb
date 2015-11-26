@@ -1,0 +1,11 @@
+{
+  "service": {
+    "name": "opentsdb",
+    "port": 4242,
+    "tags": [ "storage", "influxdb" ],
+    "check": {
+      "script": "nmap 127.0.0.1 -PN -p 4242 | grep open",
+      "interval": "10s"
+    }
+  }
+}

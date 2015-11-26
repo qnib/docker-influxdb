@@ -1,14 +1,13 @@
 FROM qnib/terminal
 
-ENV INFLUX_VER=0.9.4.2-1
+ENV INFLUX_VER=0.9.5.1-1
 RUN yum install -y https://s3.amazonaws.com/influxdb/influxdb-${INFLUX_VER}.x86_64.rpm
 ADD etc/supervisord.d/influxdb.ini /etc/supervisord.d/influxdb.ini
-ADD opt/qnib/bin/start_influxdb.sh /opt/qnib/bin/start_influxdb.sh
-ADD opt/influxdb/current/config.toml /opt/influxdb/current/config.toml
+ADD opt/qnib/influxdb/bin/start.sh /opt/qnib/influxdb/bin/
+ADD etc/influxdb/influxdb.conf /etc/influxdb/
 
 ADD opt/influxdb/etc/ /opt/influxdb/etc/
-ADD etc/consul.d/check_influxdb.json /etc/consul.d/check_influxdb.json
-ADD etc/consul.d/check_carbon.json /etc/consul.d/check_carbon.json
+ADD etc/consul.d/*.json /etc/consul.d/
 
 # put the database into a volume (if not maped)
 VOLUME ["/opt/influxdb/shared"]
@@ -18,12 +17,14 @@ EXPOSE 8083 8086 8090 8099
 
 # Graphite
 EXPOSE 2003 2003/udp
+# OpenTSDB
 EXPOSE 4242
 
-ENV ROOT_PASSWORD root
-ENV METRIC_DATABASE carbon
-ENV METRIC_USERNAME carbon
-ENV METRIC_PASSWORD carbon
-ENV DASHBOARD_DATABASE default
-ENV DASHBOARD_USERNAME default
-ENV DASHBOARD_PASSWORD default
+ENV ROOT_PASSWORD=root \
+    METRIC_DATABASE=carbon \
+    METRIC_USERNAME=carbon \
+    METRIC_PASSWORD=carbon \
+    DASHBOARD_DATABASE=default \
+    DASHBOARD_USERNAME=default \
+    DASHBOARD_PASSWORD=default
+RUN echo "tail -n500 -f /var/log/supervisor/influxdb.log" >> /root/.bash_history
