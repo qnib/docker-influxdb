@@ -2,15 +2,17 @@ consul:
     hostname: consul
     image: qnib/consul
     environment:
-    - DC_NAME=dc1
+     - DC_NAME=dc1
+     - RUN_SERVER=true
+     - BOOTSTRAP_CONSUL=true
     ports:
-    - "8500:8500"
+     - "8500:8500"
     dns: 127.0.0.1
 
 influxdb:
     hostname: influxdb
     dns: 127.0.0.1
-    image: qnib/influxdb
+    image: qnib/influxdb:0.9.5
     volumes: 
     - /opt/influxdb/shared
     environment:
