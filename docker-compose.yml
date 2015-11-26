@@ -26,7 +26,7 @@ influxdb:
     hostname: influxdb
     container_name: influxdb
     dns: 127.0.0.1
-    image: qnib/influxdb:0.9.5
+    image: qnib/influxdb
     volumes: 
     - /opt/influxdb/shared
     environment:
