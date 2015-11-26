@@ -3,6 +3,8 @@ consul:
     image: qnib/consul
     environment:
     - DC_NAME=dc1
+    - RUN_SERVER=true
+    - BOOTSTRAP_CONSUL=true
     ports:
     - "8500:8500"
     dns: 127.0.0.1
