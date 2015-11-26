@@ -1,38 +1,53 @@
 consul:
     hostname: consul
+    container_name: consul
     image: qnib/consul
     environment:
-    - DC_NAME=dc1
-    - RUN_SERVER=true
-    - BOOTSTRAP_CONSUL=true
+     - DC_NAME=dc1
+     - RUN_SERVER=true
+     - BOOTSTRAP_CONSUL=true
     ports:
-    - "8500:8500"
+     - "8500:8500"
     dns: 127.0.0.1
+
+metrics:
+    image: qnib/carbon-relay-ng
+    hostname: carbon-relay-ng
+    container_name: carbon-relay-ng
+    dns: 127.0.0.1
+    ports:
+     - 8081:8081
+    environment:
+     - DC_NAME=dc1
+    links:
+     - consul:consul
 
 influxdb:
     hostname: influxdb
+    container_name: influxdb
     dns: 127.0.0.1
-    image: qnib/influxdb
+    image: qnib/influxdb:0.9.5
     volumes: 
     - /opt/influxdb/shared
     environment:
     - DC_NAME=dc1
+    - COLLECT_METRICS=true
     links:
     - consul:consul
     ports:
     - 4242:4242
     - 8083:8083
     - 8086:8086
-    privileged: true
 
 grafana2:
-  image: qnib/grafana2
-  ports:
-   - "3000:3000"
-  dns: 127.0.0.1
-  hostname: grafana
-  environment:
-  - DC_NAME=dc1
-  links:
-  - consul:consul
-  privileged: true
+    image: qnib/grafana2
+    container_name: grafana2
+    ports:
+     - "3000:3000"
+    dns: 127.0.0.1
+    hostname: grafana
+    environment:
+    - DC_NAME=dc1
+    - COLLECT_METRICS=true
+    links:
+    - consul:consul
