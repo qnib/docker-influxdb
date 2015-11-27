@@ -2,10 +2,15 @@
 
 PIDFILE=/var/run/influxdb.pid
 
-INFLUXD_OPTS="-hostname $(hostname):8090"
-if [ "X${INFLUXDB_CLUSTER_CLIENT}" == "Xtrue" ];then
-	INFLUXD_OPTS="${INFLUXD_OPTS} -join hostname_1:port_1,hostname_2:port_2"
+if [ "X${INFLUXDB_CLUSTER_PEERS}" != "X" ];then
+ 	INFLUXD_JOIN="-join ${INFLUXDB_CLUSTER_PEERS}"
 fi
+if [ "X${INFLUXDB_HOSTNAME}" != "X" ];then
+    INFLUXD_HOST="${INFLUXDB_HOSTNAME}"
+else
+    INFLUXD_HOST="$(hostname -f)"
+fi
+INFLUXD_OPTS="-hostname ${INFLUXD_HOST}:8088 ${INFLUXD_JOIN}"
 
 ## Check if eth0 already exists
 ADDR=eth0
