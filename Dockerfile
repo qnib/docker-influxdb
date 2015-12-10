@@ -1,6 +1,6 @@
 FROM qnib/terminal
 
-ENV INFLUX_VER=0.9.5.1-1
+ENV INFLUX_VER=0.9.6-1
 RUN yum install -y https://s3.amazonaws.com/influxdb/influxdb-${INFLUX_VER}.x86_64.rpm
 ADD etc/supervisord.d/influxdb.ini /etc/supervisord.d/influxdb.ini
 ADD opt/qnib/influxdb/bin/start.sh /opt/qnib/influxdb/bin/
