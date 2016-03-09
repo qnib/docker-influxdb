@@ -28,3 +28,6 @@ ENV ROOT_PASSWORD=root \
     DASHBOARD_USERNAME=default \
     DASHBOARD_PASSWORD=default
 RUN echo "tail -n500 -f /var/log/supervisor/influxdb.log" >> /root/.bash_history
+RUN apk update && \
+    apk add curl nmap && \
+    rm -rf /var/cache/apk/*
