@@ -31,7 +31,10 @@ influxdb:
     - /opt/influxdb/shared
     environment:
     - DC_NAME=dc1
-    - COLLECT_METRICS=true
+    - COLLECT_METRICS=false
+    - SENSU_SERVER=false
+    - SENSU_CLIENT=false
+    - SENSU_API=false
     links:
     - consul:consul
     ports:
@@ -48,6 +51,6 @@ grafana2:
     hostname: grafana
     environment:
     - DC_NAME=dc1
-    - COLLECT_METRICS=true
+    - COLLECT_METRICS=false
     links:
     - consul:consul
