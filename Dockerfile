@@ -1,7 +1,7 @@
-FROM qnib/terminal
+FROM qnib/alpn-syslog
 
-ENV INFLUX_VER=0.9.6-1
-RUN dnf install -y https://s3.amazonaws.com/influxdb/influxdb-${INFLUX_VER}.x86_64.rpm
+ENV INFLUX_VER=0.10.2
+RUN curl -sfL https://s3.amazonaws.com/influxdb/influxdb-0.10.2-1_linux_amd64.tar.gz |tar xfz - -C /opt/
 ADD etc/supervisord.d/influxdb.ini /etc/supervisord.d/influxdb.ini
 ADD opt/qnib/influxdb/bin/start.sh /opt/qnib/influxdb/bin/
 ADD etc/influxdb/influxdb.conf /etc/influxdb/
