@@ -1,14 +1,9 @@
 FROM qnib/terminal
 
-ENV INFLUX_VER=0.9.6-1
-RUN dnf install -y https://s3.amazonaws.com/influxdb/influxdb-${INFLUX_VER}.x86_64.rpm
 ADD etc/supervisord.d/influxdb.ini /etc/supervisord.d/influxdb.ini
 ADD opt/qnib/influxdb/bin/start.sh /opt/qnib/influxdb/bin/
-ADD etc/influxdb/influxdb.conf /etc/influxdb/
-
 ADD opt/influxdb/etc/ /opt/influxdb/etc/
 ADD etc/consul.d/*.json /etc/consul.d/
-
 # put the database into a volume (if not maped)
 VOLUME ["/opt/influxdb/shared"]
 
@@ -28,3 +23,9 @@ ENV ROOT_PASSWORD=root \
     DASHBOARD_USERNAME=default \
     DASHBOARD_PASSWORD=default
 RUN echo "tail -n500 -f /var/log/supervisor/influxdb.log" >> /root/.bash_history
+
+ENV INFLUX_VER=0.10.2
+RUN dnf install -y https://s3.amazonaws.com/influxdb/influxdb-${INFLUX_VER}-1.x86_64.rpm
+ADD etc/influxdb/influxdb.conf /etc/influxdb/
+
+
