@@ -1,7 +1,7 @@
 consul:
     hostname: consul
     container_name: consul
-    image: qnib/consul
+    image: qnib/alpn-consul
     environment:
      - DC_NAME=dc1
      - RUN_SERVER=true
