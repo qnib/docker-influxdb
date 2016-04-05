@@ -24,6 +24,9 @@ ENV ROOT_PASSWORD=root \
     DASHBOARD_PASSWORD=default
 RUN echo "tail -n500 -f /var/log/supervisor/influxdb.log" >> /root/.bash_history
 
-ENV INFLUX_VER=0.10.2
-RUN dnf install -y https://s3.amazonaws.com/influxdb/influxdb-${INFLUX_VER}-1.x86_64.rpm
+ENV INFLUX_VER=0.11.1
+RUN cd /tmp/ \
+ && wget -q https://s3.amazonaws.com/influxdb/influxdb-0.11.1-1.x86_64.rpm \
+ && dnf install -y influxdb-0.11.1-1.x86_64.rpm \
+ && rm -f influxdb-0.11.1-1.x86_64.rpm
 ADD etc/influxdb/influxdb.conf /etc/influxdb/
