@@ -33,5 +33,6 @@ ADD etc/consul-template/influxdb/influxdb.conf.ctmpl /etc/consul-template/influx
 ENV INFLUX_VER=0.12.1
 RUN cd /tmp/ \
  && wget -q https://s3.amazonaws.com/influxdb/influxdb-${INFLUX_VER}-1.x86_64.rpm \
- && cd /tmp/ dnf install -y influxdb-${INFLUX_VER}-1.x86_64.rpm \
+ && cd /tmp/ \
+ && dnf install -y influxdb-${INFLUX_VER}-1.x86_64.rpm \
  && rm -f influxdb-${INFLUX_VER}-1.x86_64.rpm
