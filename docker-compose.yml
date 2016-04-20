@@ -35,6 +35,7 @@ influxdb:
     - SENSU_SERVER=false
     - SENSU_CLIENT=false
     - SENSU_API=false
+    - INFLUXDB_HTTP_PORT=18086
     links:
     - consul:consul
     ports:
