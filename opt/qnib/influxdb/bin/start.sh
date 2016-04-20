@@ -15,10 +15,7 @@ if [ ${EC} -eq 1 ];then
     pipework --wait
 fi
 
-function stop_influxdb {
-    kill -9 $(cat ${PIDFILE})
-    exit
-}
-trap "stop_influxdb" SIGINT SIGTERM
-
+## Consul-Template
+consul-template -consul=localhost:8500 -once -template="etc/consul-template/influxdb/influxdb.conf.ctmpl:/etc/influxdb/influxdb.conf"
+## Start
 influxd -pidfile ${PIDFILE} -config /etc/influxdb/influxdb.conf ${INFLUXD_OPTS} 
