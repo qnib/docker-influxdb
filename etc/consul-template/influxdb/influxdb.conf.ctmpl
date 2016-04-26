@@ -105,7 +105,7 @@ join = ""
 
 [opentsdb]
   enabled = true
-  bind-address = ":4242"
+  bind-address = ":{{ env "INFLUXDB_OPENTSDB_PORT" }}"
   database = "opentsdb"
   retention-policy = ""
   consistency-level = "one"

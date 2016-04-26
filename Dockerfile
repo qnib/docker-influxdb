@@ -25,14 +25,15 @@ ENV ROOT_PASSWORD=root \
     INFLUXDB_META_PORT=8088 \
     INFLUXDB_META_HTTP_PORT=8091 \
     INFLUXDB_ADMIN_PORT=8083 \
-    INFLUXDB_HTTP_PORT=8086 
+    INFLUXDB_HTTP_PORT=8086 \
+    INFLUXDB_VER=0.12.1 \
+    INFLUXDB_OPENTSDB_PORT=4242
 RUN echo "tail -n500 -f /var/log/supervisor/influxdb.log" >> /root/.bash_history 
 ADD etc/consul-template/influxdb/influxdb.conf.ctmpl /etc/consul-template/influxdb/
 
 
-ENV INFLUX_VER=0.12.1
 RUN cd /tmp/ \
- && wget -q https://s3.amazonaws.com/influxdb/influxdb-${INFLUX_VER}-1.x86_64.rpm \
+ && wget -q https://s3.amazonaws.com/influxdb/influxdb-${INFLUXDB_VER}-1.x86_64.rpm \
  && cd /tmp/ \
- && dnf install -y influxdb-${INFLUX_VER}-1.x86_64.rpm \
- && rm -f influxdb-${INFLUX_VER}-1.x86_64.rpm 
+ && dnf install -y influxdb-${INFLUXDB_VER}-1.x86_64.rpm \
+ && rm -f influxdb-${INFLUXDB_VER}-1.x86_64.rpm 
