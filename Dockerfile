@@ -1,4 +1,4 @@
-FROM qnib/terminal
+FROM qnib/diamond
 
 ADD etc/supervisord.d/influxdb.ini /etc/supervisord.d/influxdb.ini
 ADD opt/qnib/influxdb/bin/start.sh /opt/qnib/influxdb/bin/
@@ -25,7 +25,7 @@ ENV ROOT_PASSWORD=root \
     INFLUXDB_META_PORT=8088 \
     INFLUXDB_META_HTTP_PORT=8091 \
     INFLUXDB_ADMIN_PORT=8083 \
-    INFLUXDB_HTTP_PORT=8086
+    INFLUXDB_HTTP_PORT=8086 
 RUN echo "tail -n500 -f /var/log/supervisor/influxdb.log" >> /root/.bash_history 
 ADD etc/consul-template/influxdb/influxdb.conf.ctmpl /etc/consul-template/influxdb/
 
@@ -35,4 +35,4 @@ RUN cd /tmp/ \
  && wget -q https://s3.amazonaws.com/influxdb/influxdb-${INFLUX_VER}-1.x86_64.rpm \
  && cd /tmp/ \
  && dnf install -y influxdb-${INFLUX_VER}-1.x86_64.rpm \
- && rm -f influxdb-${INFLUX_VER}-1.x86_64.rpm
+ && rm -f influxdb-${INFLUX_VER}-1.x86_64.rpm 
