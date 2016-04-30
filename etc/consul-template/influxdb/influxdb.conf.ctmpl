@@ -78,7 +78,7 @@ join = ""
   json-write-enabled = false
 
 [[graphite]]
-  enabled = true
+  enabled = {{ env "INFLUXDB_GRAPHITE_ENABLED" }}
   bind-address = ":2003"
   database = "graphite"
   protocol = "tcp"
@@ -93,7 +93,7 @@ join = ""
   ]
 
 [collectd]
-  enabled = false
+  enabled = {{ env "INFLUXDB_COLLECTD_ENABLED" }}
   bind-address = ":25826"
   database = "collectd"
   retention-policy = ""
@@ -104,7 +104,7 @@ join = ""
   typesdb = "/usr/share/collectd/types.db"
 
 [opentsdb]
-  enabled = true
+  enabled = {{ env "INFLUXDB_OPENTSDB_ENABLED" }}
   bind-address = ":{{ env "INFLUXDB_OPENTSDB_PORT" }}"
   database = "opentsdb"
   retention-policy = ""
