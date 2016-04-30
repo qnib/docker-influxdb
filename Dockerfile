@@ -36,4 +36,6 @@ RUN cd /tmp/ \
  && wget -q https://s3.amazonaws.com/influxdb/influxdb-${INFLUXDB_VER}-1.x86_64.rpm \
  && cd /tmp/ \
  && dnf install -y influxdb-${INFLUXDB_VER}-1.x86_64.rpm \
- && rm -f influxdb-${INFLUXDB_VER}-1.x86_64.rpm 
+ && rm -f influxdb-${INFLUXDB_VER}-1.x86_64.rpm  \
+ && mkdir -p /usr/shared/collectd/ \
+ && wget -qO /usr/shared/collectd/types.db https://raw.githubusercontent.com/collectd/collectd/master/src/types.db
