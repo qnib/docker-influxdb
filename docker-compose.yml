@@ -10,18 +10,6 @@ consul:
      - "8500:8500"
     dns: 127.0.0.1
 
-metrics:
-    image: qnib/carbon-relay-ng
-    hostname: carbon-relay-ng
-    container_name: carbon-relay-ng
-    dns: 127.0.0.1
-    ports:
-     - 8081:8081
-    environment:
-     - DC_NAME=dc1
-    links:
-     - consul:consul
-
 influxdb:
     hostname: influxdb
     container_name: influxdb
