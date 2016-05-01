@@ -19,7 +19,7 @@ ENV ROOT_PASSWORD=root \
 RUN cd /tmp/ \
  && wget -q https://s3.amazonaws.com/influxdb/influxdb-${INFLUXDB_VER}-1.x86_64.rpm \
  && cd /tmp/ \
- && dnf install -y influxdb-${INFLUXDB_VER}-1.x86_64.rpm \
+ && dnf install -y influxdb-${INFLUXDB_VER}-1.x86_64.rpm nmap \
  && rm -f influxdb-${INFLUXDB_VER}-1.x86_64.rpm  \
  && mkdir -p /usr/share/collectd/ \
  && wget -qO /usr/share/collectd/types.db https://raw.githubusercontent.com/collectd/collectd/master/src/types.db
