@@ -40,6 +40,6 @@ EXPOSE 2003 2003/udp
 EXPOSE 4242
 
 RUN echo "tail -n500 -f /var/log/supervisor/influxdb.log" >> /root/.bash_history 
-ADD etc/consul-template/influxdb/influxdb.conf.ctmpl /etc/consul-template/influxdb/
+ADD etc/consul-templates/influxdb/influxdb.conf.ctmpl /etc/consul-templates/influxdb/
 
 

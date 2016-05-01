@@ -29,6 +29,6 @@ if [ ${EC} -eq 1 ];then
 fi
 
 ## Consul-Template
-consul-template -consul=localhost:8500 -once -template="etc/consul-template/influxdb/influxdb.conf.ctmpl:/etc/influxdb/influxdb.conf"
+consul-template -consul=localhost:8500 -once -template="etc/consul-templates/influxdb/influxdb.conf.ctmpl:/etc/influxdb/influxdb.conf"
 ## Start
 influxd -pidfile ${PIDFILE} -config /etc/influxdb/influxdb.conf ${INFLUXD_OPTS} 
