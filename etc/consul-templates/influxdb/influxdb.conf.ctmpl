@@ -90,7 +90,7 @@ join = ""
   udp-read-buffer = 0
   templates = [
      "psutil.* .hosttype.hostname.user.process.measurement*",
-     "fullerite.DockerStats.* .measurement....container_id..container_name.measurement*"
+     "fullerite.DockerStats.* ..measurement....container_id..container_name.measurement*"
   ]
 
 [collectd]
