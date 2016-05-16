@@ -28,6 +28,11 @@ if [ ${EC} -eq 1 ];then
     pipework --wait
 fi
 
+## Create databases
+for db in $(echo ${INFLUXDB_DATABASES} |tr -d ",");do
+    influx -host localhost -password root -username root -execute "CREATE DATABASE ${db}"
+done
+
 ## Consul-Template
 consul-template -consul=localhost:8500 -once -template="etc/consul-templates/influxdb/influxdb.conf.ctmpl:/etc/influxdb/influxdb.conf"
 ## Start
