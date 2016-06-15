@@ -96,6 +96,7 @@ join = ""
      "fullerite.collector_container_id_container_name_host_iface.* ..measurement....container_id..container_name..host..iface.measurement*",
      "fullerite.host.fullerite.* ...measurement..host.measurement*",
      "fullerite.collector_host.* ..measurement..collector..host.measurement*",
+     "fullerite.collector_diamond_domain_host_kernel_prefix_rack.* ..measurement..collector..domain..host..kernel..prefix..rack",
      "qcollect.collector_container_id_container_name.* ..measurement....container_id..container_name.measurement*",
      "qcollect.collector_container_id_container_name_host.* ..measurement....container_id..container_name..host.measurement*",
      "qcollect.collector_container_id_container_name_iface.* ..measurement....container_id..container_name..iface.measurement*",
