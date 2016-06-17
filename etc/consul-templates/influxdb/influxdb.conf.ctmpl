@@ -97,16 +97,17 @@ join = ""
      "fullerite.host.fullerite.* ...measurement..host.measurement*",
      "fullerite.collector_host.* ..measurement..collector..host.measurement*",
      "fullerite.collector_diamond_domain_host_kernel_prefix_rack.* ..measurement..collector..diamond..domain..host..kernel..prefix..rack",
+     "fullerite.collector_diamond_domain_host_hostid_kernel_prefix_rack.* ..measurement..collector..diamond..domain..host..hostid..kernel..prefix..rack",
      "fullerite.collector_container_id_container_name_domain_host_kernel_rack.* ..measurement..collector..container_id..container_name..domain..host..kernel..rack",
      "fullerite.collector_container_id_container_name_domain_host_iface_kernel_rack.* ..measurement..collector..container_id..container_name..domain..host..iface..kernel..rack",
      "fullerite.collector_domain_host_kernel_rack.DockerContainerCount.* ..measurement..collector..domain..host..kernel..rack",
      "fullerite.collector_domain_host_kernel_rack.fullerite.collector_errors.* ...measurement..collector..domain..host..kernel..rack",
-     "fullerite.domain_host_hostid_kernel_rack.fullerite.collector_errors.* ...measurement..domain..host..hostid..kernel..rack",
+     "fullerite.domain_host_kernel_rack.fullerite.collector_errors.* ...measurement..domain..host..kernel..rack",
      "fullerite.collector_container_id_container_name_domain_host_hostid_kernel_rack.* ..measurement..collector..container_id..container_name..domain..host..hostid..kernel..rack",
      "fullerite.collector_container_id_container_name_domain_host_hostid_iface_kernel_rack.* ..measurement..collector..container_id..container_name..domain..host..hostid..iface..kernel..rack",
      "fullerite.collector_domain_host_hostid_kernel_rack.DockerContainerCount.* ..measurement..collector..domain..host..hostid..kernel..rack",
      "fullerite.collector_domain_host_hostid_kernel_rack.fullerite.collector_errors.* ...measurement..collector..domain..host..hostid..kernel..rack",
-     "fullerite.domain_host_kernel_rack.fullerite.collector_errors.* ...measurement..domain..host..kernel..rack"
+     "fullerite.domain_host_hostid_kernel_rack.fullerite.collector_errors.* ...measurement..domain..host..hostid..kernel..rack"
   ]
 
 [collectd]
