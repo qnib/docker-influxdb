@@ -6,6 +6,11 @@ if [ "X${INFLUXDB_CLUSTER_PEERS}" != "X" ];then
  	INFLUXD_JOIN="-join ${INFLUXDB_CLUSTER_PEERS}"
 fi
 
+if [ ! -z ${ES_RAMDISK_SIZE} ];then
+    mkdir -p ${ES_PATH_DATA}
+    mount -t tmpfs -o size=${ES_RAMDISK_SIZE} tmpfs ${ES_PATH_DATA}
+fi
+
 CONSUL_RELOAD=0
 if [ ${INFLUXDB_OPENTSDB_ENABLED} != "true" ];then
     rm -f /etc/consul.d/influxdb_opentsdb.json
