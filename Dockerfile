@@ -33,7 +33,6 @@ ADD opt/qnib/influxdb/bin/start.sh \
 ADD opt/influxdb/etc/ /opt/influxdb/etc/
 ADD etc/consul.d/*.json /etc/consul.d/
 # put the database into a volume (if not maped)
-VOLUME ["/opt/influxdb/shared"]
 
 # Admin API Raft Replication
 EXPOSE 8083 8086 8090 8099
