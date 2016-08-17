@@ -11,12 +11,13 @@ ENV ROOT_PASSWORD=root \
     INFLUXDB_META_HTTP_PORT=8091 \
     INFLUXDB_ADMIN_PORT=8083 \
     INFLUXDB_HTTP_PORT=8086 \
-    INFLUXDB_VER=0.13.0 \
     INFLUXDB_OPENTSDB_PORT=4242 \
     INFLUXDB_GRAPHITE_ENABLED=false \
     INFLUXDB_COLLECTD_ENABLED=false \
     INFLUXDB_OPENTSDB_ENABLED=false \
     INFLUXDB_DATABASES=fullerite
+ARG INFLUXDB_VER=0.13.0
+VOLUME ["/opt/influxdb/shared/data"]
 RUN cd /tmp/ \
  && wget -q https://dl.influxdata.com/influxdb/releases/influxdb-${INFLUXDB_VER}.x86_64.rpm \
  && dnf install -y influxdb-${INFLUXDB_VER}.x86_64.rpm nmap \
@@ -33,14 +34,6 @@ ADD opt/qnib/influxdb/bin/start.sh \
 ADD opt/influxdb/etc/ /opt/influxdb/etc/
 ADD etc/consul.d/*.json /etc/consul.d/
 # put the database into a volume (if not maped)
-
-# Admin API Raft Replication
-EXPOSE 8083 8086 8090 8099
-
-# Graphite
-EXPOSE 2003 2003/udp
-# OpenTSDB
-EXPOSE 4242
 
 RUN echo "tail -n500 -f /var/log/supervisor/influxdb.log" >> /root/.bash_history 
 ADD etc/consul-templates/influxdb/influxdb.conf.ctmpl /etc/consul-templates/influxdb/
