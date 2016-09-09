@@ -19,6 +19,7 @@ influxdb:
      - /opt/influxdb/shared
     environment:
      - COLLECT_METRICS=false
+     - INFLUXDB_DATABASES=qcollect
     links:
      - consul:consul
     ports:
