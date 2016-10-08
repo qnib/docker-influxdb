@@ -4,16 +4,14 @@ consul:
     image: qnib/alpn-consul
     environment:
      - DC_NAME=dc1
-     - RUN_SERVER=true
-     - BOOTSTRAP_CONSUL=true
+     - CONSUL_BOOTSTRAP_EXPECT=1
     ports:
      - "8500:8500"
-    dns: 127.0.0.1
 
 influxdb:
     hostname: influxdb
     container_name: influxdb
-    dns: 127.0.0.1
+    dns: consul
     image: qnib/influxdb
     volumes: 
      - /opt/influxdb/shared
@@ -32,7 +30,7 @@ grafana3:
     container_name: grafana3
     ports:
      - "3000:3000"
-    dns: 127.0.0.1
+    dns: consul
     hostname: grafana3
     environment:
      - COLLECT_METRICS=false
@@ -43,10 +41,11 @@ qcollect:
     image: qnib/qcollect
     container_name: qcollect
     hostname: qcollect
-    dns: 127.0.0.1
+    dns: consul
     environment:
-     - FULLERITE_INFLUXDB_ENABLED=true
-     - FULLERITE_INFLUXDB_PORT=8086
+     - QCOLLECT_INFLUXDB_ENABLED=true
+     - QCOLLECT_INFLUXDB_PORT=8086
+     - QCOLLECT_INFLUXDB_SERVER=192.168.0.18
     links:
      - consul:consul
     volumes:
