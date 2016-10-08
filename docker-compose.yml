@@ -45,7 +45,6 @@ qcollect:
     environment:
      - QCOLLECT_INFLUXDB_ENABLED=true
      - QCOLLECT_INFLUXDB_PORT=8086
-     - QCOLLECT_INFLUXDB_SERVER=192.168.0.18
     links:
      - consul:consul
     volumes:
