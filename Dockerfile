@@ -1,4 +1,4 @@
-FROM qnib/syslog
+FROM qnib/alpn-consul
 
 ENV ROOT_PASSWORD=root \
     METRIC_DATABASE=carbon \
@@ -16,13 +16,12 @@ ENV ROOT_PASSWORD=root \
     INFLUXDB_COLLECTD_ENABLED=false \
     INFLUXDB_OPENTSDB_ENABLED=false \
     INFLUXDB_DATABASES=fullerite
-ARG INFLUXDB_VER=0.13.0
-VOLUME ["/opt/influxdb/shared/data"]
-RUN cd /tmp/ \
- && wget -q https://dl.influxdata.com/influxdb/releases/influxdb-${INFLUXDB_VER}.x86_64.rpm \
- && dnf install -y influxdb-${INFLUXDB_VER}.x86_64.rpm nmap \
- && rm -f influxdb-${INFLUXDB_VER}.x86_64.rpm 
-RUN mkdir -p /usr/share/collectd/ \
+ENV INFLUXDB_VER=1.0.2
+ENV INFLUXDB_URL=https://dl.influxdata.com/influxdb/releases
+RUN apk --no-cache add wget \
+ && wget -qO - ${INFLUXDB_URL}/influxdb-${INFLUXDB_VER}_linux_amd64.tar.gz |tar xfz - -C /opt/ \
+ && mv $(find /opt/ -type d -name "influxdb*" -maxdepth 1) /opt/influxdb \
+ && mkdir -p /usr/share/collectd/ \
  && wget -qO /usr/share/collectd/types.db https://raw.githubusercontent.com/collectd/collectd/master/src/types.db
 
 ADD etc/supervisord.d/influxdb.ini \
@@ -31,11 +30,10 @@ ADD etc/supervisord.d/influxdb.ini \
 ADD opt/qnib/influxdb/bin/start.sh \
     opt/qnib/influxdb/bin/init.sh \
     /opt/qnib/influxdb/bin/
-ADD opt/influxdb/etc/ /opt/influxdb/etc/
+#ADD opt/influxdb/etc/ /opt/influxdb/etc/
 ADD etc/consul.d/*.json /etc/consul.d/
 # put the database into a volume (if not maped)
 
-RUN echo "tail -n500 -f /var/log/supervisor/influxdb.log" >> /root/.bash_history 
+RUN echo "tail -n500 -f /var/log/supervisor/influxdb.log" >> /root/.bash_history
 ADD etc/consul-templates/influxdb/influxdb.conf.ctmpl /etc/consul-templates/influxdb/
-
-
+VOLUME ["/opt/influxdb/shared/data"]
