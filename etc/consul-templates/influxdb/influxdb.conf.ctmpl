@@ -1,31 +1,17 @@
 reporting-disabled = true
-bind-address = ":{{ env "INFLUXDB_META_PORT" }}"
-hostname = ""
-join = ""
+bind-address = ":8088"
 
 [meta]
-  enabled = true
-  dir = "/opt/influxdb/shared/meta"
+  dir = "{{ env "INFLUXDB_META_DIR" }}"
+  retention-autocreate = true
+  logging-enabled = true
   bind-address = ":{{ env "INFLUXDB_META_PORT" }}"
   http-bind-address = ":{{ env "INFLUXDB_META_HTTP_PORT" }}"
-  https-enabled = false
-  https-certificate = ""
-  retention-autocreate = true
-  election-timeout = "1s"
-  heartbeat-timeout = "1s"
-  leader-lease-timeout = "500ms"
-  commit-timeout = "50ms"
-  cluster-tracing = false
-  raft-promotion-enabled = true
-  logging-enabled = true
-  pprof-enabled = false
-  lease-duration = "1m0s"
 
 [data]
-  enabled = true
-  dir = "/opt/influxdb/shared/data"
+  dir = "{{ env "INFLUXDB_DATA_DIR" }}"
   engine = "tsm1"
-  wal-dir = "/opt/influxdb/shared/wal"
+  wal-dir = "{{ env "INFLUXDB_WAL_DIR" }}"
   wal-logging-enabled = true
   query-log-enabled = true
   cache-max-memory-size = 524288000
@@ -33,14 +19,17 @@ join = ""
   cache-snapshot-write-cold-duration = "1h0m0s"
   compact-full-write-cold-duration = "24h0m0s"
   max-points-per-block = 0
-  data-logging-enabled = true
+  max-series-per-database = 1000000
+  trace-logging-enabled = false
 
-[cluster]
-  force-remote-mapping = false
-  write-timeout = "5s"
-  shard-writer-timeout = "5s"
-  max-remote-write-connections = 3
-  shard-mapper-timeout = "5s"
+[coordinator]
+  write-timeout = "10s"
+  max-concurrent-queries = 0
+  query-timeout = "0"
+  log-queries-after = "0"
+  max-select-point = 0
+  max-select-series = 0
+  max-select-buckets = 0
 
 [retention]
   enabled = true
@@ -56,7 +45,6 @@ join = ""
   bind-address = ":{{ env "INFLUXDB_ADMIN_PORT" }}"
   https-enabled = false
   https-certificate = "/etc/ssl/influxdb.pem"
-  Version = ""
 
 [monitor]
   store-enabled = true
@@ -65,6 +53,11 @@ join = ""
 
 [subscriber]
   enabled = true
+  http-timeout = "30s"
+  insecure-skip-verify = false
+  ca-certs = ""
+  write-concurrency = 40
+  write-buffer-size = 1000
 
 [http]
   enabled = true
@@ -72,15 +65,22 @@ join = ""
   auth-enabled = false
   log-enabled = true
   write-tracing = false
-  pprof-enabled = false
+  pprof-enabled = true
   https-enabled = false
   https-certificate = "/etc/ssl/influxdb.pem"
-  json-write-enabled = false
+  https-private-key = ""
+  max-row-limit = 10000
+  max-connection-limit = 0
+  shared-secret = ""
+  realm = "InfluxDB"
+  unix-socket-enabled = false
+  bind-socket = "/var/run/influxdb.sock"
 
 [[graphite]]
   enabled = {{ env "INFLUXDB_GRAPHITE_ENABLED" }}
   bind-address = ":2003"
   database = "graphite"
+  retention-policy = ""
   protocol = "tcp"
   batch-size = 5000
   batch-pending = 10
@@ -88,29 +88,9 @@ join = ""
   consistency-level = "one"
   separator = "."
   udp-read-buffer = 0
-  templates = [
-     "psutil.* .hosttype.hostname.user.process.measurement*",
-     "fullerite.collector_container_id_container_name.* ..measurement....container_id..container_name.measurement*",
-     "fullerite.collector_container_id_container_name_host.* ..measurement....container_id..container_name..host.measurement*",
-     "fullerite.collector_container_id_container_name_iface.* ..measurement....container_id..container_name..iface.measurement*",
-     "fullerite.collector_container_id_container_name_host_iface.* ..measurement....container_id..container_name..host..iface.measurement*",
-     "fullerite.host.fullerite.* ...measurement..host.measurement*",
-     "fullerite.collector_host.* ..measurement..collector..host.measurement*",
-     "fullerite.collector_diamond_domain_host_kernel_prefix_rack.* ..measurement..collector..diamond..domain..host..kernel..prefix..rack",
-     "fullerite.collector_diamond_domain_host_hostid_kernel_prefix_rack.* ..measurement..collector..diamond..domain..host..hostid..kernel..prefix..rack",
-     "fullerite.collector_container_id_container_name_domain_host_kernel_rack.* ..measurement..collector..container_id..container_name..domain..host..kernel..rack",
-     "fullerite.collector_container_id_container_name_domain_host_iface_kernel_rack.* ..measurement..collector..container_id..container_name..domain..host..iface..kernel..rack",
-     "fullerite.collector_domain_host_kernel_rack.DockerContainerCount.* ..measurement..collector..domain..host..kernel..rack",
-     "fullerite.collector_domain_host_kernel_rack.fullerite.collector_errors.* ...measurement..collector..domain..host..kernel..rack",
-     "fullerite.domain_host_kernel_rack.fullerite.collector_errors.* ...measurement..domain..host..kernel..rack",
-     "fullerite.collector_container_id_container_name_domain_host_hostid_kernel_rack.* ..measurement..collector..container_id..container_name..domain..host..hostid..kernel..rack",
-     "fullerite.collector_container_id_container_name_domain_host_hostid_iface_kernel_rack.* ..measurement..collector..container_id..container_name..domain..host..hostid..iface..kernel..rack",
-     "fullerite.collector_domain_host_hostid_kernel_rack.DockerContainerCount.* ..measurement..collector..domain..host..hostid..kernel..rack",
-     "fullerite.collector_domain_host_hostid_kernel_rack.fullerite.collector_errors.* ...measurement..collector..domain..host..hostid..kernel..rack",
-     "fullerite.domain_host_hostid_kernel_rack.fullerite.collector_errors.* ...measurement..domain..host..hostid..kernel..rack"
-  ]
+  templates = []
 
-[collectd]
+[[collectd]]
   enabled = {{ env "INFLUXDB_COLLECTD_ENABLED" }}
   bind-address = ":25826"
   database = "collectd"
@@ -121,7 +101,7 @@ join = ""
   read-buffer = 0
   typesdb = "/usr/share/collectd/types.db"
 
-[opentsdb]
+[[opentsdb]]
   enabled = {{ env "INFLUXDB_OPENTSDB_ENABLED" }}
   bind-address = ":{{ env "INFLUXDB_OPENTSDB_PORT" }}"
   database = "opentsdb"
@@ -144,20 +124,8 @@ join = ""
   read-buffer = 0
   batch-timeout = "1s"
   precision = ""
-  udp-payload-size = 0
 
 [continuous_queries]
   log-enabled = true
   enabled = true
   run-interval = "1s"
-
-[hinted-handoff]
-  enabled = true
-  dir = "/root/.influxdb/hh"
-  max-size = 1073741824
-  max-age = "168h0m0s"
-  retry-rate-limit = 0
-  retry-interval = "1s"
-  retry-max-interval = "1m0s"
-  purge-interval = "1h0m0s"
-
