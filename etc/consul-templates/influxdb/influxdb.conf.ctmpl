@@ -4,7 +4,7 @@ bind-address = ":8088"
 [meta]
   dir = "{{ env "INFLUXDB_META_DIR" }}"
   retention-autocreate = true
-  logging-enabled = true
+  logging-enabled = {{ env "INFLUXDB_META_LOGGING" }}
   bind-address = ":{{ env "INFLUXDB_META_PORT" }}"
   http-bind-address = ":{{ env "INFLUXDB_META_HTTP_PORT" }}"
 
@@ -12,15 +12,15 @@ bind-address = ":8088"
   dir = "{{ env "INFLUXDB_DATA_DIR" }}"
   engine = "tsm1"
   wal-dir = "{{ env "INFLUXDB_WAL_DIR" }}"
-  wal-logging-enabled = true
-  query-log-enabled = true
+  wal-logging-enabled = {{ env "INFLUXDB_WAL_LOGGING" }}
+  query-log-enabled = {{ env "INFLUXDB_QUERY_LOGGING" }}
   cache-max-memory-size = 524288000
   cache-snapshot-memory-size = 26214400
   cache-snapshot-write-cold-duration = "1h0m0s"
   compact-full-write-cold-duration = "24h0m0s"
   max-points-per-block = 0
   max-series-per-database = 1000000
-  trace-logging-enabled = false
+  trace-logging-enabled = {{ env "INFLUXDB_TRACE_LOGGING" }}
 
 [coordinator]
   write-timeout = "10s"
@@ -63,7 +63,7 @@ bind-address = ":8088"
   enabled = true
   bind-address = ":{{ env "INFLUXDB_HTTP_PORT" }}"
   auth-enabled = false
-  log-enabled = true
+  log-enabled = {{ env "INFLUXDB_HTTP_LOGGING" }}
   write-tracing = false
   pprof-enabled = true
   https-enabled = false

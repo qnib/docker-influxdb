@@ -17,8 +17,13 @@ ENV ROOT_PASSWORD=root \
     INFLUXDB_OPENTSDB_ENABLED=false \
     INFLUXDB_DATABASES=qcollect \
     INFLUXDB_META_DIR=/opt/influxdb/shared/meta \
+    INFLUXDB_META_LOGGING=false \
     INFLUXDB_DATA_DIR=/opt/influxdb/shared/data \
-    INFLUXDB_WAL_DIR=/opt/influxdb/shared/wal
+    INFLUXDB_WAL_DIR=/opt/influxdb/shared/wal \
+    INFLUXDB_WAL_LOGGING=false \
+    INFLUXDB_QUERY_LOGGING=false \
+    INFLUXDB_HTTP_LOGGING=false \
+    INFLUXDB_TRACE_LOGGING=false
 
 ARG INFLUXDB_VER=1.0.2
 ARG INFLUXDB_URL=https://dl.influxdata.com/influxdb/releases
