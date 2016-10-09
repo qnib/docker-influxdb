@@ -24,20 +24,6 @@ if [ ${CONSUL_RELOAD} -eq 1 ];then
     consul reload
 fi
 
-## Check if eth0 already exists
-ADDR=eth0
-ip addr show ${ADDR} > /dev/null
-EC=$?
-if [ ${EC} -eq 1 ];then
-    echo "## Wait for pipework to attach device 'eth0'"
-    pipework --wait
-fi
-
-## Create databases
-for db in $(echo ${INFLUXDB_DATABASES} |tr -d ",");do
-    influx -host localhost -password root -username root -execute "CREATE DATABASE ${db}"
-done
-
 ## Consul-Template
 consul-template -consul=${CONSUL_HOST-localhost}:${CONSUL_PORT-8500} -once -template="etc/consul-templates/influxdb/influxdb.conf.ctmpl:/etc/influxdb/influxdb.conf"
 ## Start

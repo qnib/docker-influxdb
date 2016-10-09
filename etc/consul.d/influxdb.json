@@ -1,0 +1,13 @@
+{
+  "services": [
+    {
+        "id": "influxdb",
+        "name": "influxdb",
+        "port": 8086,
+        "checks": [{
+            "script": "/opt/qnib/influxdb/bin/healthcheck.sh",
+            "interval": "10s"
+        }]
+    }
+  ]
+}

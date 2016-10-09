@@ -42,9 +42,15 @@ ADD etc/supervisord.d/influxdb.ini \
     /etc/supervisord.d/
 ADD opt/qnib/influxdb/bin/start.sh \
     opt/qnib/influxdb/bin/init.sh \
+    opt/qnib/influxdb/bin/healthcheck.sh \
+    opt/qnib/influxdb/bin/healthcheck-admin.sh \
     /opt/qnib/influxdb/bin/
 #ADD opt/influxdb/etc/ /opt/influxdb/etc/
-ADD etc/consul.d/*.json /etc/consul.d/
+ADD etc/consul.d/influxdb.json \
+    etc/consul.d/influxdb-admin.json \
+    etc/consul.d/influxdb_graphite.json \
+    etc/consul.d/influxdb_opentsdb.json \
+    /etc/consul.d/
 # put the database into a volume (if not maped)
 
 RUN echo "tail -n500 -f /var/log/supervisor/influxdb.log" >> /root/.bash_history
