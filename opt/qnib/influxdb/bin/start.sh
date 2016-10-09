@@ -39,6 +39,6 @@ for db in $(echo ${INFLUXDB_DATABASES} |tr -d ",");do
 done
 
 ## Consul-Template
-consul-template -consul=localhost:8500 -once -template="etc/consul-templates/influxdb/influxdb.conf.ctmpl:/etc/influxdb/influxdb.conf"
+consul-template -consul=${CONSUL_HOST-localhost}:${CONSUL_PORT-8500} -once -template="etc/consul-templates/influxdb/influxdb.conf.ctmpl:/etc/influxdb/influxdb.conf"
 ## Start
-influxd -pidfile ${PIDFILE} -config /etc/influxdb/influxdb.conf ${INFLUXD_OPTS} 
+influxd -pidfile ${PIDFILE} -config /etc/influxdb/influxdb.conf ${INFLUXD_OPTS}
